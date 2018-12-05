@@ -1,10 +1,16 @@
 import 'package:angular/angular.dart';
+import 'package:angular_forms/angular_forms.dart';
 
 @Component(
-  selector: 'app-post-create',
-  styleUrls: ['post_create_component.css'],
-  templateUrl: 'post_create_component.html',
-)
+    selector: 'app-post-create',
+    styleUrls: ['post_create_component.css'],
+    templateUrl: 'post_create_component.html',
+    directives: [formDirectives])
 class PostCreateComponent {
-  // Nothing here yet. All logic is in TodoListComponent.
+  var enteredValue = '';
+  var newPost = 'NO CONTENT';
+
+  onAddPost() {
+    this.newPost = this.enteredValue;
+  }
 }
