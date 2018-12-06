@@ -1,0 +1,25 @@
+<section>
+    <h2>Post Comments</h2>
+    <div class="mdc-card demo-size">
+        <material-input label="Enter Value Here" floatingLabel [(ngModel)]="enteredValue" class="wide">
+        </material-input>
+        <div class="mdc-card__actions">
+            <div class="mdc-card__action-buttons">
+                <material-button raised (click)="onAddPost()">Save Post</material-button>
+            </div>
+            <div class="mdc-card__action-icons">
+                <material-button icon>
+                    <material-icon icon="favorite_border"></material-icon>
+                </material-button>
+                <material-button icon>
+                    <material-icon icon="share"></material-icon>
+                </material-button>
+                <material-button icon>
+                    <material-icon icon="more_vert"></material-icon>
+                </material-button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p>{{ newPost }}</p>
