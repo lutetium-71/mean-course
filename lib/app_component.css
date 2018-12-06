@@ -1,3 +1,9 @@
 :host {
     /* This is equivalent of the 'body' selector of a page. */
 }
+
+.app-body{
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 5vw;
+}
