@@ -12,6 +12,7 @@ import '../../models/post.dart';
       MaterialExpansionPanel,
       MaterialExpansionPanelSet,
       NgFor,
+      NgIf,
     ])
 class PostListComponent {
   List<Post> posts = [
@@ -19,4 +20,5 @@ class PostListComponent {
     Post('Second Post', 'Second Post to be displayed'),
     Post('Third Post', 'Third Post to be displayed')
   ];
+  // List<Post> posts = [];
 }
