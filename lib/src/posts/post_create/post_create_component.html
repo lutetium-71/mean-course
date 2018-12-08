@@ -1,10 +1,14 @@
-<section>
+<section class="data-entry">
     <h2>Post Comments</h2>
     <div class="mdc-card demo-size">
-        <material-input label="Title" floatingLabel [(ngModel)]="enteredTitle" class="wide">
-        </material-input>
-        <material-input label="Content" floatingLabel [(ngModel)]="enteredContent" class="wide">
-        </material-input>
+        <form>
+            <material-input label="Title" floatingLabel [(ngModel)]="enteredTitle" class="wide" ngControl="title"
+                required>
+            </material-input>
+            <material-input label="Content" floatingLabel [(ngModel)]="enteredContent" class="wide" ngControl="content"
+                required>
+            </material-input>
+        </form>
         <div class="mdc-card__actions">
             <div class="mdc-card__action-buttons">
                 <material-button raised (click)="onAddPost()">Save Post</material-button>
