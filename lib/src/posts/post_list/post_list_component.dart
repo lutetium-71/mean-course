@@ -15,10 +15,6 @@ import '../../models/post.dart';
       NgIf,
     ])
 class PostListComponent {
-  List<Post> posts = [
-    Post('First Post', 'First Post to be displayed'),
-    Post('Second Post', 'Second Post to be displayed'),
-    Post('Third Post', 'Third Post to be displayed')
-  ];
-  // List<Post> posts = [];
+  @Input()
+  List<Post> posts = [];
 }
