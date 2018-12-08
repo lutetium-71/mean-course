@@ -1,15 +1,15 @@
 <section class="data-entry">
     <h2>Post Comments</h2>
     <div class="mdc-card demo-size">
-        <form (ngSubmit)="onAddPost(postForm)" #postForm="ngForm">
-            <material-input label="Title" floatingLabel class="wide" ngControl="title" required name="title">
+        <form #postForm="ngForm">
+            <material-input label="Title" floatingLabel class="wide" ngControl="title" required name="title" ngModel>
             </material-input>
-            <material-input label="Content" floatingLabel class="wide" ngControl="content" required name="content">
+            <material-input label="Content" floatingLabel class="wide" ngControl="content" required name="content"
+                ngModel>
             </material-input>
             <div class="mdc-card__actions">
                 <div class="mdc-card__action-buttons">
-                    <!-- <material-button raised type="submit">Save Post</material-button> -->
-                    <button type="submit">Save Post</button>
+                    <material-button raised type="submit" (trigger)="onAddPost(postForm)">Save Post</material-button>
                 </div>
                 <div class="mdc-card__action-icons">
                     <material-button icon>
@@ -26,11 +26,3 @@
         </form>
     </div>
 </section>
-<!-- <form (ngSubmit)="onAddPost()" #postForm="ngForm">
-    <material-input label="Title" floatingLabel class="wide" ngControl="title" required #title="ngForm" [(ngModel)]="post.title">
-    </material-input>
-    <material-input label="Content" floatingLabel class="wide" ngControl="content" required #content="ngForm"
-        [(ngModel)]="post.content">
-    </material-input>
-    <button raised type="submit">Save Post</button>
-</form> -->

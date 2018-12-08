@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'dart:convert';
 
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -30,9 +31,7 @@ class PostCreateComponent {
   final _postCreated = new StreamController<Post>();
 
   void onAddPost(NgForm form) {
-    window.console.log(form.value);
-    Post post =
-        Post(form.value.title.toString(), form.value.content.toString());
+    Post post = Post(form.value["title"], form.value["content"]);
     _postCreated.add(post);
   }
 
