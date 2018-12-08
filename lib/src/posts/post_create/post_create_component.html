@@ -1,29 +1,36 @@
 <section class="data-entry">
     <h2>Post Comments</h2>
     <div class="mdc-card demo-size">
-        <form>
-            <material-input label="Title" floatingLabel [(ngModel)]="enteredTitle" class="wide" ngControl="title"
-                required>
+        <form (ngSubmit)="onAddPost(postForm)" #postForm="ngForm">
+            <material-input label="Title" floatingLabel class="wide" ngControl="title" required name="title">
             </material-input>
-            <material-input label="Content" floatingLabel [(ngModel)]="enteredContent" class="wide" ngControl="content"
-                required>
+            <material-input label="Content" floatingLabel class="wide" ngControl="content" required name="content">
             </material-input>
+            <div class="mdc-card__actions">
+                <div class="mdc-card__action-buttons">
+                    <!-- <material-button raised type="submit">Save Post</material-button> -->
+                    <button type="submit">Save Post</button>
+                </div>
+                <div class="mdc-card__action-icons">
+                    <material-button icon>
+                        <material-icon icon="favorite_border"></material-icon>
+                    </material-button>
+                    <material-button icon>
+                        <material-icon icon="share"></material-icon>
+                    </material-button>
+                    <material-button icon>
+                        <material-icon icon="more_vert"></material-icon>
+                    </material-button>
+                </div>
+            </div>
         </form>
-        <div class="mdc-card__actions">
-            <div class="mdc-card__action-buttons">
-                <material-button raised (click)="onAddPost()">Save Post</material-button>
-            </div>
-            <div class="mdc-card__action-icons">
-                <material-button icon>
-                    <material-icon icon="favorite_border"></material-icon>
-                </material-button>
-                <material-button icon>
-                    <material-icon icon="share"></material-icon>
-                </material-button>
-                <material-button icon>
-                    <material-icon icon="more_vert"></material-icon>
-                </material-button>
-            </div>
-        </div>
     </div>
 </section>
+<!-- <form (ngSubmit)="onAddPost()" #postForm="ngForm">
+    <material-input label="Title" floatingLabel class="wide" ngControl="title" required #title="ngForm" [(ngModel)]="post.title">
+    </material-input>
+    <material-input label="Content" floatingLabel class="wide" ngControl="content" required #content="ngForm"
+        [(ngModel)]="post.content">
+    </material-input>
+    <button raised type="submit">Save Post</button>
+</form> -->
