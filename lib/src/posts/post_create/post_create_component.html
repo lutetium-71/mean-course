@@ -2,10 +2,11 @@
     <h2>Post Comments</h2>
     <div class="mdc-card demo-size">
         <form #postForm="ngForm">
-            <material-input label="Title" floatingLabel class="wide" ngControl="title" required name="title" ngModel>
+            <material-input label="Title" floatingLabel class="wide" ngControl="title" required name="title" ngModel
+                error="Please enter a title">
             </material-input>
             <material-input label="Content" floatingLabel class="wide" ngControl="content" required name="content"
-                ngModel>
+                ngModel error="Please enter a message">
             </material-input>
             <div class="mdc-card__actions">
                 <div class="mdc-card__action-buttons">
