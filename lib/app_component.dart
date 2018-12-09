@@ -5,7 +5,7 @@ import 'src/posts/post_create/post_create_component.dart';
 import 'src/posts/post_list/post_list_component.dart';
 import 'src/header/header_component.dart';
 
-import './src/models/post.dart';
+import './src/post_model.dart';
 
 @Component(
   selector: 'my-app',
