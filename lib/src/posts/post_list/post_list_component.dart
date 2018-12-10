@@ -1,7 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/material_expansionpanel/material_expansionpanel.dart';
 import 'package:angular_components/material_expansionpanel/material_expansionpanel_set.dart';
-import '../../models/post.dart';
+import '../../post_model.dart';
 
 @Component(
     selector: 'app-post-list',
