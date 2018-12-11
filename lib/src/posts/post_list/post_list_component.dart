@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:angular/angular.dart';
 
 import 'package:angular_components/material_expansionpanel/material_expansionpanel.dart';
@@ -15,20 +16,24 @@ import '../../post_list_service.dart';
   ],
   providers: [ClassProvider(PostListService)],
 )
-class PostListComponent implements OnInit {
+class PostListComponent implements OnInit, OnDestroy {
   final PostListService postListService;
-
+  StreamSubscription _postsSubscription;
   List<Post> postList = [];
 
   PostListComponent(this.postListService);
-  var controller = new StreamController<String>();
+
   @override
-  Future<Null> ngOnInit() async {
-    this.postList = await this.postListService.getPostList();
-    this
+  ngOnInit() {
+    this.postList = this.postListService.getPostList();
+    this._postsSubscription = this
         .postListService
         .getPostUpdateListener()
         .stream
-        .listen((List<Post> posts) => {});
+        .listen((List<Post> posts) => this.postList = posts);
+  }
+
+  ngOnDestroy() {
+    this._postsSubscription.cancel();
   }
 }
