@@ -5,8 +5,6 @@ import 'src/posts/post_create/post_create_component.dart';
 import 'src/posts/post_list/post_list_component.dart';
 import 'src/header/header_component.dart';
 
-import './src/post_model.dart';
-
 @Component(
   selector: 'my-app',
   styleUrls: ['app_component.css'],
@@ -14,10 +12,4 @@ import './src/post_model.dart';
   directives: [PostCreateComponent, PostListComponent, HeaderComponent],
   providers: const <dynamic>[materialProviders],
 )
-class AppComponent {
-  List<Post> storedPosts = [];
-
-  onPostAdded(Post post) {
-    storedPosts.add(post);
-  }
-}
+class AppComponent {}

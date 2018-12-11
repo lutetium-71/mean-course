@@ -1,9 +1,9 @@
-<section *ngIf="posts.isNotEmpty">
-    <material-expansionpanel *ngFor="let post of posts" name="{{post.title}}" [showSaveCancel]="false">
+<section *ngIf="postList.isNotEmpty">
+    <material-expansionpanel *ngFor="let post of postList" name="{{post.title}}" [showSaveCancel]="false">
         {{post.content}}
     </material-expansionpanel>
 </section>
 
-<material-expansionpanel *ngIf="posts.isEmpty" name="No messages" [showSaveCancel]="false" disabled>
+<material-expansionpanel *ngIf="postList.isEmpty" name="No messages" [showSaveCancel]="false" disabled>
     No Messages :(
 </material-expansionpanel>
