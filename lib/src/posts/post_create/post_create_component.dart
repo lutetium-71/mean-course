@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_components/material_button/material_button.dart';
@@ -32,6 +34,7 @@ class PostCreateComponent {
   PostCreateComponent(this.postListService);
 
   void onAddPost(NgForm form) {
+    window.console.log(form);
     Post post = Post(form.value["title"], form.value["content"]);
     this.postListService.addPost(post);
   }

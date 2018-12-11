@@ -5,16 +5,17 @@ import './post_model.dart';
 
 @Injectable()
 class PostListService {
-  List<Post> postList = <Post>[];
-  final _postUpdated = new StreamController<List<Post>>();
+  List<Post> _postList = <Post>[];
+  final StreamController<List<Post>> _postUpdated =
+      new StreamController<List<Post>>();
 
-  Future<List<Post>> getPostList() async => List.from(this.postList);
+  List<Post> getPostList() => List.from(this._postList);
 
-  Stream<List<Post>> getPostUpdateListener() => this._postUpdated.stream;
+  StreamController<List<Post>> getPostUpdateListener() => this._postUpdated;
 
   addPost(Post post) {
-    this.postList.add(post);
-    this._postUpdated.add(List.from(this.postList));
+    this._postList.add(post);
+    this._postUpdated.add(List.from(this._postList));
   }
 
   //   PostCreateComponent(this.postListService);
