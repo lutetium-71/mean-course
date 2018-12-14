@@ -28,12 +28,11 @@ class PostListComponent implements OnInit, OnDestroy {
     this.postList = this.postListService.getPostList();
     this._postsSubscription = this
         .postListService
-        .getPostUpdateListener()
-        .stream
+        .getPostUpdateListener
         .listen((List<Post> posts) => this.postList = posts);
   }
 
   ngOnDestroy() {
-    this._postsSubscription.cancel();
+    _postsSubscription.cancel();
   }
 }
