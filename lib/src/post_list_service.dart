@@ -5,7 +5,7 @@ import './post_model.dart';
 
 @Injectable()
 class PostListService {
-  List<Post> _postList = <Post>[];
+  List<Post> _postList = [Post('hello', 'world')];
   final StreamController<List<Post>> _postUpdated =
       new StreamController<List<Post>>();
 
