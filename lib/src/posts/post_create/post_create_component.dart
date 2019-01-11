@@ -31,5 +31,6 @@ class PostCreateComponent {
   onAddPost(NgForm form) {
     Post post = Post(form.value["title"], form.value["content"]);
     this.postListService.addPost(post);
+    form.reset();
   }
 }
