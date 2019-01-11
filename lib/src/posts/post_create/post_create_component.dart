@@ -26,8 +26,6 @@ import '../../post_list_service.dart';
   ],
 )
 class PostCreateComponent {
-  String enteredTitle = '';
-  String enteredContent = '';
   final PostListService postListService;
 
   PostCreateComponent(this.postListService);
@@ -36,6 +34,4 @@ class PostCreateComponent {
     Post post = Post(form.value["title"], form.value["content"]);
     this.postListService.addPost(post);
   }
-
-  bool checkEntry() => enteredTitle.isEmpty || enteredContent.isEmpty;
 }
