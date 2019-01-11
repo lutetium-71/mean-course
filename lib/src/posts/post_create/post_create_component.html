@@ -1,19 +1,45 @@
 <section class="data-entry">
-    <h2>Post Comments</h2>
-    <div class="mdc-card demo-size">
-        <form #postForm="ngForm">
-            <material-input autoFocus label="Title" floatingLabel class="wide" ngControl="title" required name="title"
-                [(ngModel)]="enteredTitle" ngModel #title requiredErrorMsg="Enter a title">
-            </material-input>
-            <material-input label="Content" floatingLabel class="wide" ngControl="content" required name="content"
-                [(ngModel)]="enteredContent" ngModel #content requiredErrorMsg="Enter a message">
-            </material-input>
-            <div class="mdc-card__actions">
-                <div class="mdc-card__action-buttons">
-                    <material-button raised type="submit" (trigger)="onAddPost(postForm)" [disabled]="checkEntry()">Save
-                        Post</material-button>
-                </div>
-            </div>
-        </form>
-    </div>
+  <h2>Post Comments</h2>
+  <div class="mdc-card demo-size">
+    <form #postForm="ngForm">
+      <material-input
+        autoFocus
+        label="Title"
+        floatingLabel
+        class="wide"
+        ngControl="title"
+        required
+        name="title"
+        [(ngModel)]="enteredTitle"
+        ngModel
+        #title
+        requiredErrorMsg="Enter a title"
+      >
+      </material-input>
+      <material-input
+        label="Content"
+        floatingLabel
+        class="wide"
+        ngControl="content"
+        required
+        name="content"
+        [(ngModel)]="enteredContent"
+        ngModel
+        #content
+        requiredErrorMsg="Enter a message"
+      >
+      </material-input>
+      <div class="mdc-card__actions">
+        <div class="mdc-card__action-buttons">
+          <material-button
+            raised
+            type="submit"
+            (trigger)="onAddPost(postForm)"
+            [disabled]="!postForm.valid"
+            >Save Post</material-button
+          >
+        </div>
+      </div>
+    </form>
+  </div>
 </section>

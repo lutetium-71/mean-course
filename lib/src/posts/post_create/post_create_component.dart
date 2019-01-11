@@ -24,22 +24,14 @@ import '../../post_list_service.dart';
     NgForm,
     NgIf,
   ],
-  providers: [ClassProvider(PostListService)],
 )
 class PostCreateComponent {
-  String enteredTitle = '';
-  String enteredContent = '';
   final PostListService postListService;
 
   PostCreateComponent(this.postListService);
 
   onAddPost(NgForm form) {
-    window.console.log(form);
     Post post = Post(form.value["title"], form.value["content"]);
-    window.console.log(post);
     this.postListService.addPost(post);
-    window.console.log(this.postListService.addPost(post));
   }
-
-  bool checkEntry() => enteredTitle.isEmpty || enteredContent.isEmpty;
 }
