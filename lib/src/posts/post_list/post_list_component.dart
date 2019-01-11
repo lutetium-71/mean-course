@@ -14,7 +14,6 @@ import '../../post_list_service.dart';
     NgFor,
     NgIf,
   ],
-  providers: [ClassProvider(PostListService)],
 )
 class PostListComponent implements OnInit, OnDestroy {
   final PostListService postListService;
