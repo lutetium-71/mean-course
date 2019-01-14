@@ -6,7 +6,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
+
+	"github.com/gorilla/handlers"
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
@@ -118,11 +119,5 @@ func main() {
 	r.HandleFunc("/api/posts/{id}", db.findPost).Methods("GET")
 
 	fmt.Println("Server running on localhost:3000")
-	srv := &http.Server{
-		Handler:      r,
-		Addr:         ":3000",
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
-	log.Fatal(srv.ListenAndServe())
+	http.ListenAndServe(":3000", handlers.CORS()(r))
 }
