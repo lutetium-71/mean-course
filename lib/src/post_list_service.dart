@@ -18,7 +18,7 @@ class PostListService {
   // List<Post> getPostList() => List.from(this._postList);
   getPostList() async {
     var response = await _http.get(url);
-    print(response);
+    return json.decode(response.body);
   }
 
   Stream<List<Post>> get getPostUpdateListener => _postUpdated.stream;
