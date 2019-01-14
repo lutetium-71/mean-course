@@ -2,16 +2,16 @@ name: posts
 description: A web app that uses AngularDart Components
 version: 0.0.1
 # homepage: https://www.example.com
-author: lutetium <email@example.com>
+author: raion314 <raion314@outlook.com>
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   angular: ^5.1.0
   angular_components: ^0.10.1
   angular_forms: ^2.1.0
-  rxdart: ^0.20.0
+  http: ^0.11.0
 
 dev_dependencies:
   angular_test: ^2.1.0
