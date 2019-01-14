@@ -28,31 +28,16 @@ type (
 )
 
 func (db *DB) getAllPost(w http.ResponseWriter, r *http.Request) {
-	// var posts []*Post
-	// w.WriteHeader(http.StatusOK)
-	// cur, err := db.collection.Find(nil)
-	// if err != nil {
-	// 	w.Write([]byte(err.Error()))
-	// } else {
-	// 	for cur.Next(context.TODO()) {
-	// 		var post Post
-	// 		err := cur.Decode(&post)
-	// 		if err != nil {
-	// 			log.Fatal(err)
-	// 		}
-	// 		posts = append(posts, &post)
-	// 	}
-	// 	if err := cur.Err(); err != nil {
-	// 		w.Write([]byte(err.Error()))
-	// 	}
-	// 	cur.Close(context.TODO())
-	// 	w.Header().Set("Content-Type", "application/json")
-	// 	response, _ := json.Marshal(posts)
-	// 	w.Write(response)
-	// }
-	// fmt.Printf("Found a single document: %+v\n", posts)
-	fmt.Fprintln(w, "not implemented yet!")
-
+	var posts []Post
+	w.WriteHeader(http.StatusOK)
+	err := db.collection.Find(nil).All(&posts)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		response, _ := json.Marshal(posts)
+		w.Write(response)
+	}
 }
 
 func (db *DB) createPost(w http.ResponseWriter, r *http.Request) {
@@ -72,10 +57,31 @@ func (db *DB) createPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func (db *DB) updatePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "not implemented yet!")
+	vars := mux.Vars(r)
+	var post Post
+	putBody, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(putBody, &post)
+	// create a Hash ID
+	err := db.collection.Update(bson.M{"_id": bson.ObjectIdHex(vars["id"])}, bson.M{"$set": &post})
+	if err != nil {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(err.Error()))
+	} else {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "text")
+		w.Write([]byte("Update successfully"))
+	}
 }
 func (db *DB) deletePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "not implemented yet!")
+	vars := mux.Vars(r)
+	err := db.collection.Remove(bson.M{"_id": bson.ObjectIdHex(vars["id"])})
+	if err != nil {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(err.Error()))
+	} else {
+		w.Header().Set("Content-Type", "text")
+		w.Write([]byte("Deleted sucessfully"))
+	}
 }
 
 func (db *DB) findPost(w http.ResponseWriter, r *http.Request) {
