@@ -24,7 +24,7 @@ class PostListComponent implements OnInit, OnDestroy {
 
   @override
   ngOnInit() {
-    this.postList = this.postListService.getPostList();
+    this.postListService.getPostList();
     this._postsSubscription = this
         .postListService
         .getPostUpdateListener
