@@ -33,4 +33,9 @@ class PostListService {
     _postList.add(post);
     _postUpdated.add(_postList.toList());
   }
+
+  deletePost(String postId) async {
+    final deleteUrl = '$url/$postId';
+    await _http.delete(deleteUrl, headers: _headers);
+  }
 }

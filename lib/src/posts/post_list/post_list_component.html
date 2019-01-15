@@ -4,6 +4,7 @@
     name="{{ post.title }}"
     saveText="Edit"
     cancelText="Delete"
+    (cancel)="deletePost(post.id)"
   >
     {{ post.content }}
   </material-expansionpanel>

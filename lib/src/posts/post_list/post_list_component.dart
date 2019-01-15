@@ -31,6 +31,10 @@ class PostListComponent implements OnInit, OnDestroy {
         .listen((List<Post> posts) => this.postList = posts);
   }
 
+  deletePost(String id) {
+    postListService.deletePost(id);
+  }
+
   ngOnDestroy() {
     _postsSubscription.cancel();
   }
