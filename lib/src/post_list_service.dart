@@ -9,6 +9,7 @@ import './post_model.dart';
 class PostListService {
   final BrowserClient _http;
   String url = 'http://localhost:3000/api/posts';
+  static final _headers = {'Content-Type': 'application/json'};
   List<Post> _postList = [];
   final StreamController<List<Post>> _postUpdated =
       new StreamController<List<Post>>();
@@ -25,7 +26,10 @@ class PostListService {
 
   Stream<List<Post>> get getPostUpdateListener => _postUpdated.stream;
 
-  addPost(Post post) {
+  addPost(Post post) async {
+    final response =
+        await _http.post(url, headers: _headers, body: json.encode(post));
+    post = Post.fromJson(json.decode(response.body));
     _postList.add(post);
     _postUpdated.add(_postList.toList());
   }
