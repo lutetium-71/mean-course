@@ -120,7 +120,7 @@ func main() {
 	r.HandleFunc("/api/posts", db.getAllPost).Methods("GET")
 	r.HandleFunc("/api/posts", db.createPost).Methods("POST")
 	r.HandleFunc("/api/posts", db.updatePost).Methods("PUT")
-	r.HandleFunc("/api/posts", db.deletePost).Methods("DELETE")
+	r.HandleFunc("/api/posts/{id}", db.deletePost).Methods("DELETE")
 	r.HandleFunc("/api/posts/{id}", db.findPost).Methods("GET")
 
 	fmt.Println("Server running on localhost:3000")
