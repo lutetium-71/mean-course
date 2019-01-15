@@ -18,7 +18,7 @@ class PostListService {
 
   getAllPosts() async {
     final response = await _http.get(url);
-    final _postList = (json.decode(response.body) as List)
+    _postList = (json.decode(response.body) as List)
         .map((json) => Post.fromJson(json))
         .toList();
     _postUpdated.add(_postList.toList());
@@ -37,5 +37,7 @@ class PostListService {
   deletePost(String postId) async {
     final deleteUrl = '$url/$postId';
     await _http.delete(deleteUrl, headers: _headers);
+    _postList.removeWhere((post) => post.id == postId);
+    _postUpdated.add(_postList.toList());
   }
 }
