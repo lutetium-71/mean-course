@@ -52,6 +52,7 @@ func (db *DB) createPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	} else {
+		w.WriteHeader(http.StatusCreated)
 		w.Header().Set("Content-Type", "application/json")
 		response, _ := json.Marshal(post)
 		w.Write(response)
