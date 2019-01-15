@@ -112,6 +112,10 @@ func main() {
 
 	defer session.Close()
 
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	headersOk := handlers.AllowedHeaders([]string{"Origin", "X-Requested-With", "Content-Type", "Accept"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+
 	r := mux.NewRouter()
 	r.HandleFunc("/api/posts", db.getAllPost).Methods("GET")
 	r.HandleFunc("/api/posts", db.createPost).Methods("POST")
@@ -120,5 +124,5 @@ func main() {
 	r.HandleFunc("/api/posts/{id}", db.findPost).Methods("GET")
 
 	fmt.Println("Server running on localhost:3000")
-	http.ListenAndServe(":3000", handlers.CORS()(r))
+	http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(r))
 }
