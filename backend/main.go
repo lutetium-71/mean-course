@@ -52,6 +52,7 @@ func (db *DB) createPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	} else {
+		w.WriteHeader(http.StatusCreated)
 		w.Header().Set("Content-Type", "application/json")
 		response, _ := json.Marshal(post)
 		w.Write(response)
@@ -111,13 +112,17 @@ func main() {
 
 	defer session.Close()
 
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	headersOk := handlers.AllowedHeaders([]string{"Origin", "X-Requested-With", "Content-Type", "Accept"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+
 	r := mux.NewRouter()
 	r.HandleFunc("/api/posts", db.getAllPost).Methods("GET")
 	r.HandleFunc("/api/posts", db.createPost).Methods("POST")
 	r.HandleFunc("/api/posts", db.updatePost).Methods("PUT")
-	r.HandleFunc("/api/posts", db.deletePost).Methods("DELETE")
+	r.HandleFunc("/api/posts/{id}", db.deletePost).Methods("DELETE")
 	r.HandleFunc("/api/posts/{id}", db.findPost).Methods("GET")
 
 	fmt.Println("Server running on localhost:3000")
-	http.ListenAndServe(":3000", handlers.CORS()(r))
+	http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(r))
 }

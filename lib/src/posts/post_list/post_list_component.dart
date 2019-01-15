@@ -24,11 +24,13 @@ class PostListComponent implements OnInit, OnDestroy {
 
   @override
   ngOnInit() {
-    this.postListService.getPostList();
-    this._postsSubscription = this
-        .postListService
-        .getPostUpdateListener
-        .listen((List<Post> posts) => this.postList = posts);
+    postListService.getAllPosts();
+    _postsSubscription = postListService.getPostUpdateListener
+        .listen((List<Post> posts) => postList = posts);
+  }
+
+  deletePost(String id) {
+    postListService.deletePost(id);
   }
 
   ngOnDestroy() {
