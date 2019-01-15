@@ -16,7 +16,7 @@ class PostListService {
 
   PostListService(this._http);
 
-  getPostList() async {
+  getAllPosts() async {
     final response = await _http.get(url);
     final _postList = (json.decode(response.body) as List)
         .map((json) => Post.fromJson(json))
@@ -26,7 +26,7 @@ class PostListService {
 
   Stream<List<Post>> get getPostUpdateListener => _postUpdated.stream;
 
-  addPost(Post post) async {
+  createPost(Post post) async {
     final response =
         await _http.post(url, headers: _headers, body: json.encode(post));
     post = Post.fromJson(json.decode(response.body));
