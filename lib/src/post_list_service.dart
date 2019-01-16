@@ -12,16 +12,19 @@ class PostListService {
   static final _headers = {'Content-Type': 'application/json'};
   List<Post> _postList = [];
   final StreamController<List<Post>> _postUpdated =
-      new StreamController<List<Post>>();
+      new StreamController<List<Post>>.broadcast();
 
   PostListService(this._http);
 
   getAllPosts() async {
     final response = await _http.get(url);
-    _postList = (json.decode(response.body) as List)
-        .map((json) => Post.fromJson(json))
-        .toList();
-    _postUpdated.add(_postList.toList());
+    final results = json.decode(response.body) as List;
+    if (results != null) {
+      _postList = results.map((json) => Post.fromJson(json)).toList();
+      _postUpdated.add(_postList.toList());
+    } else {
+      _postUpdated.add(_postList.toList());
+    }
   }
 
   Stream<List<Post>> get getPostUpdateListener => _postUpdated.stream;
