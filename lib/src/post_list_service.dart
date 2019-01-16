@@ -12,7 +12,7 @@ class PostListService {
   static final _headers = {'Content-Type': 'application/json'};
   List<Post> _postList = [];
   final StreamController<List<Post>> _postUpdated =
-      new StreamController<List<Post>>();
+      new StreamController<List<Post>>.broadcast();
 
   PostListService(this._http);
 
