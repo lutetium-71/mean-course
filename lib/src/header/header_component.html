@@ -7,8 +7,10 @@
     >
     <div class="material-spacer"></div>
     <nav class="material-navigation">
-      <a [routerLink]="RoutePaths.create.toUrl()" [routerLinkActive]="'active'"
-        >New Post</a
+      <material-button
+        [routerLink]="RoutePaths.create.toUrl()"
+        [routerLinkActive]="'active'"
+        >New Post</material-button
       >
     </nav>
   </div>
