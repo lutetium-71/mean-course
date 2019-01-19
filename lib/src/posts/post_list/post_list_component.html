@@ -5,6 +5,7 @@
     saveText="Edit"
     cancelText="Delete"
     (cancel)="deletePost(post.id)"
+    (save)="getPost(post.id)"
   >
     {{ post.content }}
   </material-expansionpanel>
