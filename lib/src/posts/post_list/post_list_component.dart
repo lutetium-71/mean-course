@@ -1,7 +1,10 @@
 import 'dart:async';
+
 import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
 
 import 'package:angular_components/material_expansionpanel/material_expansionpanel.dart';
+import '../../route_paths.dart';
 import '../../post_model.dart';
 import '../../post_list_service.dart';
 
@@ -13,25 +16,48 @@ import '../../post_list_service.dart';
     MaterialExpansionPanel,
     NgFor,
     NgIf,
+    coreDirectives,
   ],
 )
-class PostListComponent implements OnInit, OnDestroy {
-  final PostListService postListService;
+class PostListComponent implements OnDestroy, OnActivate {
+  final PostListService _postListService;
+  final Router _router;
   StreamSubscription _postsSubscription;
   List<Post> postList = [];
+  Post post;
 
-  PostListComponent(this.postListService);
+  PostListComponent(this._postListService, this._router);
 
   @override
-  ngOnInit() {
-    postListService.getAllPosts();
-    _postsSubscription = postListService.getPostUpdateListener
+  void onActivate(_, RouterState current) async {
+    await _getPosts();
+  }
+
+  Future<void> _getPosts() async {
+    _postListService.getAllPosts();
+    _postsSubscription = _postListService.getPostUpdateListener
         .listen((List<Post> posts) => postList = posts);
   }
 
   deletePost(String id) {
-    postListService.deletePost(id);
+    _postListService.deletePost(id);
   }
+
+  getPost(String id) async {
+    _postListService.getPost(id);
+    print('getpost');
+    return _gotoPost(id);
+  }
+
+  Future<NavigationResult> _gotoPost(String id) =>
+      _router.navigate(_postUrl(id));
+
+  Future<NavigationResult> goBack() => _router.navigate(
+      RoutePaths.posts.toUrl(),
+      NavigationParams(queryParameters: {postId: '${post.id}'}));
+
+  String _postUrl(String id) =>
+      RoutePaths.edit.toUrl(parameters: {postId: '$id'});
 
   ngOnDestroy() {
     _postsSubscription.cancel();
