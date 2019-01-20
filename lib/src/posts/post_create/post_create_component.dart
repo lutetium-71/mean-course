@@ -26,13 +26,13 @@ import '../../post_list_service.dart';
   ],
 )
 class PostCreateComponent {
-  final PostListService postListService;
+  final PostListService _postListService;
 
-  PostCreateComponent(this.postListService);
+  PostCreateComponent(this._postListService);
 
   onAddPost(NgForm form) {
     Post post = Post(null, form.value["title"], form.value["content"]);
-    postListService.createPost(post);
+    _postListService.createPost(post);
     form.reset();
   }
 }

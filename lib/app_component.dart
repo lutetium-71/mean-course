@@ -16,7 +16,7 @@ import 'src/routes.dart';
     PostCreateComponent,
     PostListComponent,
     HeaderComponent,
-    routerDirectives
+    routerDirectives,
   ],
   providers: [materialProviders, ClassProvider(PostListService)],
   exports: [RoutePaths, Routes],
