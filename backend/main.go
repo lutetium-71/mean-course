@@ -7,10 +7,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/handlers"
-
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -63,7 +62,8 @@ func (db *DB) updatePost(w http.ResponseWriter, r *http.Request) {
 	var post Post
 	putBody, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(putBody, &post)
-	// create a Hash ID
+
+	// update post
 	err := db.collection.Update(bson.M{"_id": bson.ObjectIdHex(vars["id"])}, bson.M{"$set": &post})
 	if err != nil {
 		w.WriteHeader(http.StatusOK)
@@ -119,7 +119,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/api/posts", db.getAllPost).Methods("GET")
 	r.HandleFunc("/api/posts", db.createPost).Methods("POST")
-	r.HandleFunc("/api/posts", db.updatePost).Methods("PUT")
+	r.HandleFunc("/api/posts/{id}", db.updatePost).Methods("PUT")
 	r.HandleFunc("/api/posts/{id}", db.deletePost).Methods("DELETE")
 	r.HandleFunc("/api/posts/{id}", db.findPost).Methods("GET")
 

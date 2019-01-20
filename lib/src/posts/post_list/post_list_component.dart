@@ -24,16 +24,11 @@ class PostListComponent implements OnDestroy, OnActivate {
   final Router _router;
   StreamSubscription _postsSubscription;
   List<Post> postList = [];
-  Post post;
 
   PostListComponent(this._postListService, this._router);
 
   @override
-  void onActivate(_, RouterState current) async {
-    await _getPosts();
-  }
-
-  Future<void> _getPosts() async {
+  void onActivate(_, RouterState current) {
     _postListService.getAllPosts();
     _postsSubscription = _postListService.getPostUpdateListener
         .listen((List<Post> posts) => postList = posts);
@@ -43,18 +38,16 @@ class PostListComponent implements OnDestroy, OnActivate {
     _postListService.deletePost(id);
   }
 
-  getPost(String id) async {
-    _postListService.getPost(id);
-    print('getpost');
-    return _gotoPost(id);
+  getPost(String id) {
+    _gotoPost(id);
   }
 
   Future<NavigationResult> _gotoPost(String id) =>
       _router.navigate(_postUrl(id));
 
-  Future<NavigationResult> goBack() => _router.navigate(
-      RoutePaths.posts.toUrl(),
-      NavigationParams(queryParameters: {postId: '${post.id}'}));
+  // Future<NavigationResult> goBack() => _router.navigate(
+  //     RoutePaths.posts.toUrl(),
+  //     NavigationParams(queryParameters: {id: '${post.id}'}));
 
   String _postUrl(String id) =>
       RoutePaths.edit.toUrl(parameters: {postId: '$id'});

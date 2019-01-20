@@ -1,5 +1,5 @@
 <section class="data-entry">
-  <h2>Edit Post</h2>
+  <h2>Post Comments</h2>
   <div class="mdc-card demo-size">
     <form #postForm="ngForm">
       <material-input
@@ -10,6 +10,7 @@
         ngControl="title"
         required
         name="title"
+        [ngModel]="postUpdate?.title"
         #title
         requiredErrorMsg="Enter a title"
       >
@@ -21,6 +22,7 @@
         ngControl="content"
         required
         name="content"
+        [ngModel]="postUpdate?.content"
         #content
         requiredErrorMsg="Enter a message"
       >
@@ -32,7 +34,7 @@
             type="submit"
             (trigger)="onEditPost(postForm)"
             [disabled]="!postForm.valid"
-            >Save Post</material-button
+            >Update Post</material-button
           >
         </div>
       </div>
