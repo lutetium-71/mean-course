@@ -1,0 +1,42 @@
+<section class="data-entry">
+  <div class="mdc-card demo-size">
+    <form #postForm="ngForm">
+      <material-input
+        autoFocus
+        type="email"
+        label="email"
+        floatingLabel
+        class="wide"
+        ngControl="email"
+        required
+        name="email"
+        #title
+        requiredErrorMsg="Enter a valid email address"
+      >
+      </material-input>
+      <material-input
+        type="password"
+        label="Password"
+        floatingLabel
+        class="wide"
+        ngControl="password"
+        required
+        name="password"
+        #content
+        requiredErrorMsg="Enter a password"
+      >
+      </material-input>
+      <div class="mdc-card__actions">
+        <div class="mdc-card__action-buttons">
+          <material-button
+            raised
+            type="submit"
+            (trigger)="login()"
+            [disabled]="!postForm.valid"
+            >Login</material-button
+          >
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
