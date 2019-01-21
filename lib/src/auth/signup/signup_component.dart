@@ -1,6 +1,9 @@
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_button.dart';
+import 'package:angular_components/material_input/material_input.dart';
 
 @Component(
   selector: 'app-signup',
@@ -9,6 +12,17 @@ import 'package:angular_components/material_button/material_button.dart';
     'signup_component.css'
   ],
   templateUrl: 'signup_component.html',
-  directives: [routerDirectives, MaterialButtonComponent],
+  directives: [
+    AutoFocusDirective,
+    routerDirectives,
+    formDirectives,
+    MaterialButtonComponent,
+    materialInputDirectives,
+    NgForm,
+  ],
 )
-class SignUpComponent {}
+class SignUpComponent {
+  onSignUp(NgForm form) {
+    print(form.value);
+  }
+}
