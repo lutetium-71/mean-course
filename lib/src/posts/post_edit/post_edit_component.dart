@@ -8,6 +8,7 @@ import 'package:angular_components/material_input/material_input.dart';
 
 import '../../post_model.dart';
 import '../../post_list_service.dart';
+import '../../route_paths.dart';
 
 @Component(
   selector: 'app-post-create',
@@ -28,11 +29,12 @@ import '../../post_list_service.dart';
 )
 class PostEditComponent implements OnActivate {
   final PostListService _postListService;
+  final Router _router;
   String postId;
   Post post;
   Post postUpdate;
 
-  PostEditComponent(this._postListService);
+  PostEditComponent(this._postListService, this._router);
 
   @override
   void onActivate(_, RouterState current) async {
@@ -43,5 +45,10 @@ class PostEditComponent implements OnActivate {
   onEditPost(NgForm form) {
     Post post = Post(postId, form.value["title"], form.value["content"]);
     _postListService.updatePost(post);
+    _gotoHome();
   }
+
+  Future<NavigationResult> _gotoHome() => _router.navigate(_homeUrl());
+
+  String _homeUrl() => RoutePaths.posts.toUrl();
 }
