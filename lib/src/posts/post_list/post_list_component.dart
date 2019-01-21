@@ -45,10 +45,6 @@ class PostListComponent implements OnDestroy, OnActivate {
   Future<NavigationResult> _gotoPost(String id) =>
       _router.navigate(_postUrl(id));
 
-  // Future<NavigationResult> goBack() => _router.navigate(
-  //     RoutePaths.posts.toUrl(),
-  //     NavigationParams(queryParameters: {id: '${post.id}'}));
-
   String _postUrl(String id) =>
       RoutePaths.edit.toUrl(parameters: {postId: '$id'});
 
