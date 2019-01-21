@@ -3,7 +3,6 @@ import 'package:angular_router/angular_router.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_button.dart';
-import 'package:angular_components/material_icon/material_icon.dart';
 import 'package:angular_components/material_input/material_input.dart';
 
 @Component(
@@ -18,12 +17,12 @@ import 'package:angular_components/material_input/material_input.dart';
     routerDirectives,
     formDirectives,
     MaterialButtonComponent,
-    MaterialIconComponent,
     materialInputDirectives,
     NgForm,
-    NgIf,
   ],
 )
 class LoginComponent {
-  login() {}
+  onLogin(NgForm form) {
+    print(form.value);
+  }
 }
