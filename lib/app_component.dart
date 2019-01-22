@@ -8,6 +8,7 @@ import 'src/header/header_component.dart';
 import 'src/auth/signup/signup_component.dart';
 import 'src/auth/login/login_component.dart';
 import 'src/post_list_service.dart';
+import 'src/auth_service.dart';
 import 'src/routes.dart';
 
 @Component(
@@ -22,7 +23,11 @@ import 'src/routes.dart';
     SignUpComponent,
     routerDirectives,
   ],
-  providers: [materialProviders, ClassProvider(PostListService)],
+  providers: [
+    materialProviders,
+    ClassProvider(PostListService),
+    ClassProvider(AuthService)
+  ],
   exports: [RoutePaths, Routes],
 )
 class AppComponent {}
