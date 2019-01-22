@@ -8,7 +8,7 @@ import './post_model.dart';
 @Injectable()
 class PostListService {
   final BrowserClient _http;
-  String url = 'http://localhost:3000/api/posts';
+  final baseurl = 'http://localhost:3000/api/posts';
   static final _headers = {'Content-Type': 'application/json; charset=UTF-8'};
   Post post;
   List<Post> _postList = [];
@@ -18,13 +18,13 @@ class PostListService {
   PostListService(this._http);
 
   getPost(String postId) async {
-    final getUrl = '$url/$postId';
-    final response = await _http.get(getUrl);
+    final url = '$baseurl/$postId';
+    final response = await _http.get(url);
     return Post.fromJson(json.decode(response.body));
   }
 
   getAllPosts() async {
-    final response = await _http.get(url);
+    final response = await _http.get(baseurl);
     final results = json.decode(response.body) as List;
     if (results != null) {
       _postList = results.map((json) => Post.fromJson(json)).toList();
@@ -38,19 +38,19 @@ class PostListService {
 
   createPost(Post post) async {
     final response =
-        await _http.post(url, headers: _headers, body: json.encode(post));
+        await _http.post(baseurl, headers: _headers, body: json.encode(post));
     post = Post.fromJson(json.decode(response.body));
     _postList.add(post);
     _postUpdated.add(_postList.toList());
   }
 
   updatePost(Post post) async {
-    final updateUrl = '$url/${post.id}';
+    final updateUrl = '$baseurl/${post.id}';
     await _http.put(updateUrl, headers: _headers, body: json.encode(post));
   }
 
   deletePost(String postId) async {
-    final deleteUrl = '$url/$postId';
+    final deleteUrl = '$baseurl/$postId';
     await _http.delete(deleteUrl, headers: _headers);
     _postList.removeWhere((post) => post.id == postId);
     _postUpdated.add(_postList.toList());
