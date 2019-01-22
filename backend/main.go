@@ -11,6 +11,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type (
@@ -25,9 +26,15 @@ type (
 		Title   string        `bson:"title" json:"title"`
 		Content string        `bson:"content" json:"content"`
 	}
+	// User struct
+	User struct {
+		ID       bson.ObjectId `bson:"_id,omitempty" json:"id"`
+		Email    string        `bson:"email" json:"email"`
+		Password string        `bson:"password" json:"password"`
+	}
 )
 
-func (db *DB) getAllPost(w http.ResponseWriter, r *http.Request) {
+func (db *DB) getAllPosts(w http.ResponseWriter, r *http.Request) {
 	var posts []Post
 	w.WriteHeader(http.StatusOK)
 	err := db.collection.Find(nil).All(&posts)
@@ -57,6 +64,7 @@ func (db *DB) createPost(w http.ResponseWriter, r *http.Request) {
 		w.Write(response)
 	}
 }
+
 func (db *DB) updatePost(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var post Post
@@ -74,6 +82,7 @@ func (db *DB) updatePost(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Update successfully"))
 	}
 }
+
 func (db *DB) deletePost(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := db.collection.Remove(bson.M{"_id": bson.ObjectIdHex(vars["id"])})
@@ -86,7 +95,7 @@ func (db *DB) deletePost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (db *DB) findPost(w http.ResponseWriter, r *http.Request) {
+func (db *DB) getPost(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var post Post
 
@@ -99,6 +108,37 @@ func (db *DB) findPost(w http.ResponseWriter, r *http.Request) {
 		response, _ := json.Marshal(post)
 		w.Write(response)
 	}
+}
+
+func (db *DB) createUser(w http.ResponseWriter, r *http.Request) {
+	var user User
+	userBody, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(userBody, &user)
+
+	// create Hash ID for new user
+	user.ID = bson.NewObjectId()
+	user.Password = hashAndSalt(getPassword(user.Password))
+	err := db.collection.Insert(user)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	} else {
+		w.WriteHeader(http.StatusCreated)
+		w.Header().Set("Content-Type", "application/json")
+		response, _ := json.Marshal(user)
+		w.Write(response)
+	}
+}
+
+func getPassword(password string) []byte {
+	return []byte(password)
+}
+
+func hashAndSalt(password []byte) string {
+	hash, err := bcrypt.GenerateFromPassword(password, bcrypt.MinCost)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(hash)
 }
 
 func main() {
@@ -117,11 +157,13 @@ func main() {
 	methodsOk := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
 
 	r := mux.NewRouter()
-	r.HandleFunc("/api/posts", db.getAllPost).Methods("GET")
+	r.HandleFunc("/api/posts", db.getAllPosts).Methods("GET")
 	r.HandleFunc("/api/posts", db.createPost).Methods("POST")
 	r.HandleFunc("/api/posts/{id}", db.updatePost).Methods("PUT")
 	r.HandleFunc("/api/posts/{id}", db.deletePost).Methods("DELETE")
-	r.HandleFunc("/api/posts/{id}", db.findPost).Methods("GET")
+	r.HandleFunc("/api/posts/{id}", db.getPost).Methods("GET")
+
+	r.HandleFunc("/api/user/signup", db.createUser).Methods("POST")
 
 	fmt.Println("Server running on localhost:3000")
 	http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(r))
