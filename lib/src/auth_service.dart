@@ -17,9 +17,13 @@ class AuthService {
     final response =
         await _http.post(url, headers: _headers, body: json.encode(user));
     print(response.body);
-    // post = Post.fromJson(json.decode(response.body));
-    // _postList.add(post);
-    // _postUpdated.add(_postList.toList());
+  }
+
+  loginUser(User user) async {
+    final url = '$baseurl/login';
+    final response =
+        await _http.post(url, headers: _headers, body: json.encode(user));
+    print(response.body);
   }
 
   // getPost(String postId) async {
