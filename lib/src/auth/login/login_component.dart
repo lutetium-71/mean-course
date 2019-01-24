@@ -5,6 +5,9 @@ import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_button.dart';
 import 'package:angular_components/material_input/material_input.dart';
 
+import '../../user_model.dart';
+import '../../auth_service.dart';
+
 @Component(
   selector: 'app-signup',
   styleUrls: [
@@ -22,7 +25,13 @@ import 'package:angular_components/material_input/material_input.dart';
   ],
 )
 class LoginComponent {
+  AuthService _authService;
+
+  LoginComponent(this._authService);
+
   onLogin(NgForm form) {
-    print(form.value);
+    User post = User(null, form.value["email"], form.value["password"]);
+    _authService.loginUser(post);
+    // form.reset();
   }
 }
