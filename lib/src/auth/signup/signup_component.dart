@@ -32,6 +32,6 @@ class SignUpComponent {
   onSignUp(NgForm form) {
     User post = User(null, form.value["email"], form.value["password"]);
     _authService.createUser(post);
-    form.reset();
+    // form.reset();
   }
 }
